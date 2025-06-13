@@ -49,13 +49,14 @@ def main():
     zs = []  # store average random walk lengths for plotting
 
     # iterate through different values of n
-    for n in range(0, 20, 5):
+    for n in range(0, 40, 5):
         # iterate through different values of c
         for c in range(n, n*2, 5):
             avg_walk_lengths = [] 
-            G = initialize(n, c)
-            path = random_walk(G)
-            avg_walk_lengths.append(path)
+            for i in range (5):
+                G = initialize(n, c)
+                path = random_walk(G)
+                avg_walk_lengths.append(path)
             mean_walk = np.mean(avg_walk_lengths)
             results.append([n, c, mean_walk])
             xs.append(n)
