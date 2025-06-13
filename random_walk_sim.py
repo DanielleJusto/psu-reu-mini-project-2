@@ -1,7 +1,7 @@
 from pylab import *
 import networkx as nx
 import random as rd
-
+import numpy as np 
 
 # Initialize a random graph with N nodes and C edges and return
 def initialize(N, C):
@@ -20,9 +20,10 @@ def random_walk(G):
     start_node = rd.choice(list(G.nodes()))
     current_node = start_node
     path = [current_node]
-    visited = set([current_node])
+    visited = set([current_node]) # Copilot 
     G.nodes[start_node]['state'] = 1
-
+ 
+    #Copilot
     while len(visited) < len(G.nodes()):
         # Get unvisited neighbors
         unvisited_neighbors = [n for n in G.neighbors(current_node) if G.nodes[n]['state'] == 0]
@@ -40,9 +41,15 @@ def random_walk(G):
     return path
 
 def main():
-    G = initialize(20,30)
-    path  = random_walk(G)
-    print(path)
-    print(len(path))
+
+    walk_lengths = []
+    for i in range(10):
+        G = initialize(10,20)
+        path  = random_walk(G)
+        walk_lengths.append(len(path))
+        
+    average_walk_length = np.mean(walk_lengths)
+    print(walk_lengths)
+    print(average_walk_length)
 
 main()
