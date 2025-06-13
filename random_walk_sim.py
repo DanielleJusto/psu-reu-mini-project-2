@@ -3,6 +3,7 @@ import networkx as nx
 import random as rd
 import numpy as np 
 
+
 # Initialize a random graph with N nodes and C edges and return
 def initialize(N, C):
     # Used Copilot to figure out how to ensure generated graph is always connected
@@ -20,10 +21,9 @@ def random_walk(G):
     start_node = rd.choice(list(G.nodes()))
     current_node = start_node
     path = [current_node]
-    visited = set([current_node]) # Copilot 
+    visited = set([current_node])
     G.nodes[start_node]['state'] = 1
  
-    #Copilot
     while len(visited) < len(G.nodes()):
         # Get unvisited neighbors
         unvisited_neighbors = [n for n in G.neighbors(current_node) if G.nodes[n]['state'] == 0]
@@ -38,18 +38,20 @@ def random_walk(G):
         G.nodes[current_node]['state'] = 1
         visited.add(current_node)
 
-    return path
+    return len(path)
 
 def main():
+    avgs_all_runs = []
+    for n in range(5,16,5): # iterate through different values of n
+        for c in range(n,n*2,5): # iterate through different values of c
+            avg_walk_lengths = []
+            for i in range(5): # for each n,c combination simulate 5 walks
+                G = initialize(n,c)
+                path  = random_walk(G)
+                avg_walk_lengths.append(path)
 
-    walk_lengths = []
-    for i in range(10):
-        G = initialize(10,20)
-        path  = random_walk(G)
-        walk_lengths.append(len(path))
-        
-    average_walk_length = np.mean(walk_lengths)
-    print(walk_lengths)
-    print(average_walk_length)
+            avgs_all_runs.append(np.mean(avg_walk_lengths))
+
+    print(avgs_all_runs)
 
 main()
