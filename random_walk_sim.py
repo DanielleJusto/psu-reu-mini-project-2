@@ -41,17 +41,20 @@ def random_walk(G):
     return len(path)
 
 def main():
-    avgs_all_runs = []
+    results =[]
     for n in range(5,16,5): # iterate through different values of n
+        run_results = []
+        run_results.append(n)
         for c in range(n,n*2,5): # iterate through different values of c
+            run_results.append(c)
             avg_walk_lengths = []
             for i in range(5): # for each n,c combination simulate 5 walks
                 G = initialize(n,c)
                 path  = random_walk(G)
                 avg_walk_lengths.append(path)
 
-            avgs_all_runs.append(np.mean(avg_walk_lengths))
-
-    print(avgs_all_runs)
+        run_results.append(np.mean(avg_walk_lengths))
+        results.append(run_results)
+    print(results)
 
 main()
